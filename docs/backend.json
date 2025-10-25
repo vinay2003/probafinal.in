@@ -1,0 +1,203 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Proba platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user (matches Firebase Auth UID)."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address.",
+          "format": "email"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User's display name."
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "URL of the user's profile picture."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the user account was created."
+        },
+        "lastSeen": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the user was last active."
+        },
+        "subscriptionTier": {
+          "type": "string",
+          "enum": ["free", "quiz", "pro"],
+          "description": "The user's subscription tier."
+        },
+        "featureTrials": {
+          "type": "object",
+          "description": "Remaining trials for paid features.",
+          "properties": {
+            "quiz": { "type": "number" },
+            "flashcards": { "type": "number" },
+            "assistant": { "type": "number" }
+          }
+        }
+      },
+      "required": ["id", "email", "createdAt", "subscriptionTier"]
+    },
+    "StudyPlan": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "StudyPlan",
+      "type": "object",
+      "description": "Represents a study plan created by a user.",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N StudyPlan)"
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the study session."
+        },
+        "topic": {
+          "type": "string",
+          "description": "The topic of the study session."
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date of the study session."
+        },
+        "duration": {
+          "type": "number",
+          "description": "The duration of the study session in minutes."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "completed"],
+          "description": "The status of the study session."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the study plan was created."
+        }
+      },
+      "required": ["userId", "subject", "topic", "date", "duration", "status", "createdAt"]
+    },
+    "Quiz": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Quiz",
+      "type": "object",
+      "description": "Represents a quiz or assessment taken by a user.",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Quiz)"
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the quiz."
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic of the quiz."
+        },
+        "score": {
+          "type": "number",
+          "description": "The user's score on the quiz."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the quiz was taken."
+        },
+        "questions": {
+          "type": "array",
+          "description": "An array of questions from the quiz, including user answers and feedback.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "options": { "type": "array", "items": { "type": "string" } },
+              "studentAnswer": { "type": "string" },
+              "correctAnswer": { "type": "string" },
+              "feedback": { "type": "string" }
+            },
+            "required": ["question", "options", "studentAnswer", "correctAnswer", "feedback"]
+          }
+        }
+      },
+      "required": ["userId", "subject", "topic", "score", "createdAt", "questions"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "google.com"]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles.  Only the authenticated user can read/write their own profile.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/studyPlans/{studyPlanId}",
+        "definition": {
+          "entityName": "StudyPlan",
+          "schema": {
+            "$ref": "#/backend/entities/StudyPlan"
+          },
+          "description": "Stores study plans created by each user. Only the user can access their own study plans.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "studyPlanId",
+              "description": "The unique identifier of the study plan."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/quizzes/{quizId}",
+        "definition": {
+          "entityName": "Quiz",
+          "schema": {
+            "$ref": "#/backend/entities/Quiz"
+          },
+          "description": "Stores quizzes created by each user. Only the user can access their own quizzes.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "quizId",
+              "description": "The unique identifier of the quiz."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure security, scalability, and ease of debugging, adhering to the principles of Authorization Independence, Clarity of Intent, DBAC, and QAPs. It uses path-based ownership for user-specific data and denormalization for collaborative data access. By storing roles in the database, we avoid custom claims. The structure also avoids hierarchical authorization dependencies by denormalizing membership data where necessary, thus improving atomicity and simplifying security rules. Explicit state modeling is encouraged within documents using a `status` field to represent document states clearly. This avoids having to infer document states from multiple boolean fields or timestamps. For all entities owned by the user a top-level path based structure (`/users/{userId}/...`) is implemented. This ensures only the current user is able to read/write data to these paths. For collaborative entities, a membership map (`members: {uid1: 'role', uid2: 'role'}`) is used. To avoid custom claims, user roles are stored directly in a database to leverage `request.auth.uid` for authorization rules."
+  }
+}

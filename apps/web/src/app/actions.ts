@@ -163,7 +163,7 @@ export async function optimizeResumeAction(resume: string, jobDescription: strin
   return await fetchApi('ai/resume', 'POST', { resume, jobDescription });
 }
 
-export async function upgradeSubscriptionAction(userId: string, tier: 'quiz' | 'pro') {
+export async function upgradeSubscriptionAction(userId: string, tier: 'quiz' | 'pro'): Promise<{ success: boolean; error?: string }> {
   // Call Payments logic or just stub.
   // Ideally this generates an order or verifies something.
   return { success: true };

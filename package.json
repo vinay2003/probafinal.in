@@ -1,0 +1,15 @@
+{
+  "name": "proba-global",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "predev": "lsof -ti :3001,9002 | xargs kill -9 || true",
+    "dev": "concurrently -n \"WEB,API\" -c \"blue,magenta\" \"npm run dev --workspace=apps/web\" \"npm run start:dev --workspace=apps/api\"",
+    "install:all": "npm install && npm install --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

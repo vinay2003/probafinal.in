@@ -1,0 +1,104 @@
+/**
+ * @fileOverview
+ * This ruleset enforces a strict user-ownership model for all data.
+ * All data is nested under /users/{userId}, ensuring that only the authenticated user can access their own data.
+ *
+ * Data Structure:
+ * - /users/{userId}: Stores user profile information.
+ * - /users/{userId}/studyPlans/{studyPlanId}: Stores study plans created by the user.
+ * - /users/{userId}/quizzes/{quizId}: Stores quizzes taken by the user.
+ *
+ * Key Security Decisions:
+ * - Users can only access their own data. Listing other users is not allowed.
+ * - Authorization is based on the `request.auth.uid` matching the `userId` in the path.
+ * - Data validation is limited to checking ownership on create and enforcing immutability of the userId on updates.
+ *
+ *  Denormalization for Authorization:
+ *  - The `userId` is present in both the path and the document data for `/users/{userId}/studyPlans/{studyPlanId}` and `/users/{userId}/quizzes/{quizId}`. This allows for simple and performant ownership checks without additional reads.
+ *
+ * Structural Segregation:
+ *  - User-specific data (study plans, quizzes) is stored under the `/users/{userId}` path, ensuring clear segregation and simplified authorization.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Manages user profiles. Only the authenticated user can read/write their own profile.
+     * @path /users/{userId}
+     * @allow (create) - User with UID 'user123' creates their profile with id: 'user123'.
+     * @allow (get) - User with UID 'user123' retrieves their profile.
+     * @allow (update) - User with UID 'user123' updates their profile.
+     * @allow (delete) - User with UID 'user123' deletes their profile.
+     * @deny (create) - User with UID 'user456' tries to create a profile for 'user123'.
+     * @principle Enforces document ownership, ensuring only the authenticated user can manage their profile.
+     */
+    match /users/{userId} {
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      function isExistingOwner(userId) {
+          return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Manages study plans created by each user. Only the user can access their own study plans.
+     * @path /users/{userId}/studyPlans/{studyPlanId}
+     * @allow (create) - User 'user123' creates a study plan under their user ID.
+     * @allow (get) - User 'user123' retrieves a study plan under their user ID.
+     * @allow (update) - User 'user123' updates a study plan under their user ID.
+     * @allow (delete) - User 'user123' deletes a study plan under their user ID.
+     * @deny (create) - User 'user456' tries to create a study plan under user 'user123'.
+     * @principle Enforces document ownership, ensuring only the authenticated user can manage their study plans.
+     */
+    match /users/{userId}/studyPlans/{studyPlanId} {
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+       function isExistingOwner(userId) {
+          return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Manages quizzes created by each user. Only the user can access their own quizzes.
+     * @path /users/{userId}/quizzes/{quizId}
+     * @allow (create) - User 'user123' creates a quiz under their user ID.
+     * @allow (get) - User 'user123' retrieves a quiz under their user ID.
+     * @allow (update) - User 'user123' updates a quiz under their user ID.
+     * @allow (delete) - User 'user123' deletes a quiz under their user ID.
+     * @deny (create) - User 'user456' tries to create a quiz under user 'user123'.
+     * @principle Enforces document ownership, ensuring only the authenticated user can manage their quizzes.
+     */
+    match /users/{userId}/quizzes/{quizId} {
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      function isExistingOwner(userId) {
+          return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}

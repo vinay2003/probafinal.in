@@ -1,0 +1,46 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-dashboard",
+      "description": "A focused student studying at a clean desk with a laptop and books.",
+      "imageUrl": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwc3R1ZHlpbmd8ZW58MHx8fHwxNzYxMDM4Mjc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student studying"
+    },
+    {
+      "id": "hero-landing",
+      "description": "An illustration of a brain with glowing connections, symbolizing learning and intelligence.",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxBSSUyMGxlYXJuaW5nfGVufDB8fHx8MTc2MTAzMjk5Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "AI learning"
+    },
+    {
+      "id": "before-ai",
+      "description": "An animated character looking stressed while studying with a pile of books.",
+      "imageUrl": "https://images.unsplash.com/photo-1713006615995-acc452dde2e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxN3x8YW5pbWF0ZWQlMjAyZCUyMG1hbiUyMHN0cnVnZ2xpbmclMjBpbiUyMHN0dWRpZXN8ZW58MHx8fHwxNzYxMTIwNzUxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "animated student struggling"
+    },
+    {
+      "id": "after-ai",
+      "description": "A clean, organized desk with a laptop showing a study plan, and a smiling, confident student.",
+      "imageUrl": "https://images.unsplash.com/photo-1453928582365-b6ad3332aab9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvcmdhbml6ZWQlMjBkZXNrfGVufDB8fHx8MTc2MTAzMDIzMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "organized desk"
+    },
+    {
+      "id": "workflow-1",
+      "description": "A person signing up on a modern, clean interface on a laptop.",
+      "imageUrl": "https://images.unsplash.com/photo-1586737487737-18a892543916?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzaWduJTIwdXB8ZW58MHx8fHwxNzYxMTM1MDU0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "signup interface"
+    },
+    {
+      "id": "workflow-2",
+      "description": "An abstract visualization of an AI generating a complex, structured plan.",
+      "imageUrl": "https://images.unsplash.com/photo-1677756119517-756a188d2d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxBSSUyMGdlbmVyYXRpbmd8ZW58MHx8fHwxNzYxMTM1MTAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "AI generation"
+    },
+    {
+      "id": "workflow-3",
+      "description": "A student looking at a screen with charts and graphs, showing progress and achievements.",
+      "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwcm9ncmVzcyUyMHRyYWNraW5nfGVufDB8fHx8MTc2MTEzNTEzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "progress tracking"
+    }
+  ]
+}

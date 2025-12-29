@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import anime from 'animejs/lib/anime.es.js';
+import { animate } from 'animejs';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Bot, LineChart, FileText, BrainCircuit, Globe, Code } from 'lucide-react';
 
@@ -43,8 +43,10 @@ export function Features() {
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     const handleMouseEnter = (index: number) => {
-        anime({
-            targets: cardsRef.current[index],
+        const card = cardsRef.current[index];
+        if (!card) return;
+
+        animate(card, {
             scale: 1.05,
             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
             duration: 300,
@@ -53,8 +55,10 @@ export function Features() {
     };
 
     const handleMouseLeave = (index: number) => {
-        anime({
-            targets: cardsRef.current[index],
+        const card = cardsRef.current[index];
+        if (!card) return;
+
+        animate(card, {
             scale: 1,
             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
             duration: 300,

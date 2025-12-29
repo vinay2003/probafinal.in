@@ -82,7 +82,7 @@ export function Navbar() {
                         Log in
                     </Link>
                     <Button asChild className="rounded-full px-6 font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 hover:scale-105">
-                        <Link href="/subscription">Get Started</Link>
+                        <Link href="/signup">Get Started</Link>
                     </Button>
                 </div>
 
@@ -120,7 +120,7 @@ export function Navbar() {
                                     </SheetClose>
                                     <SheetClose asChild>
                                         <Button className="w-full justify-center rounded-full shadow-lg shadow-primary/20" asChild>
-                                            <Link href="/subscription">Get Started</Link>
+                                            <Link href="/signup">Get Started</Link>
                                         </Button>
                                     </SheetClose>
                                 </div>

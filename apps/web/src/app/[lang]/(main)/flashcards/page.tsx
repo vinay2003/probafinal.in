@@ -188,7 +188,7 @@ export default function FlashcardsPage() {
         <CardHeader>
           <div className='flex items-center gap-2'>
             <Layers className="w-6 h-6 text-accent" />
-            <CardTitle className="font-bold text-2xl" as="h1">Generate Flashcards</CardTitle>
+            <CardTitle className="font-bold text-2xl">Generate Flashcards</CardTitle>
           </div>
           <CardDescription>
             Create a deck of flashcards on any topic to supercharge your study sessions.

@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { LegalLayout } from '@/components/legal/LegalLayout';
+import { InteractiveLegalPage, Section } from '@/components/legal/InteractiveLegalPage';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Return Policy - Proba',
@@ -6,27 +9,55 @@ export const metadata: Metadata = {
 };
 
 export default function ReturnPolicyPage() {
+    const sections: Section[] = [
+        {
+            id: 'digital-returns',
+            title: 'Returns for Digital Services',
+            content: "As Proba primarily offers digital services (SaaS) and subscriptions, traditional 'returns' of physical goods do not typically apply. Once a subscription period has commenced and the service has been accessed, the 'time' used cannot be returned."
+        },
+        {
+            id: 'cancellations',
+            title: 'Subscription Cancellations',
+            content: (
+                <>
+                    <p>You may cancel your subscription at any time via your account settings dashboard.</p>
+                    <ul className="list-disc pl-6 space-y-2 mt-4">
+                        <li><strong>Effect:</strong> Your cancellation will take effect at the end of the current billing cycle.</li>
+                        <li><strong>Access:</strong> You will retain full access to Proba Pro features until that date.</li>
+                        <li><strong>Auto-renewal:</strong> Cancellation ensures you won't be charged for the next cycle.</li>
+                    </ul>
+                </>
+            )
+        },
+        {
+            id: 'exceptions',
+            title: 'Exceptions',
+            content: "In cases of technical failure where the service was completely inaccessible for a significant duration (more than 24 hours), we may offer a pro-rata extension of your subscription or a partial refund at our discretion."
+        },
+        {
+            id: 'contact',
+            title: 'Contact Us',
+            content: (
+                <div className="bg-muted p-4 rounded-lg">
+                    <p className="mb-2">If you have any questions about our Returns and Cancellations Policy, please contact us:</p>
+                    <ul className="list-none space-y-1">
+                        <li><strong>Email:</strong> support@proba.in</li>
+                        <li><strong>Web:</strong> <Link href="/contact-us" className="text-primary underline">Contact Support Page</Link></li>
+                    </ul>
+                </div>
+            )
+        }
+    ];
+
     return (
-        <div className="container mx-auto py-12 px-4 max-w-4xl">
-            <h1 className="text-4xl font-extrabold mb-8 text-foreground">Return Policy</h1>
-            <div className="prose dark:prose-invert max-w-none text-muted-foreground">
-                <p className="lead">Last updated: {new Date().toLocaleDateString()}</p>
-
-                <p>Thank you for choosing Proba. We are committed to ensuring your satisfaction with our AI-powered learning tools.</p>
-
-                <h2 className="text-foreground">Returns</h2>
-                <p>As Proba primarily offers digital services and subscriptions, traditional "returns" of physical goods do not typically apply. However, we are committed to resolving any issues you may encounter with our services.</p>
-
-                <h2 className="text-foreground">Subscription Cancellations</h2>
-                <p>You may cancel your subscription at any time. Your access will continue until the end of your current billing cycle.</p>
-
-                <h2 className="text-foreground">Contact Us</h2>
-                <p>If you have any questions about our Returns and Cancellations Policy, please contact us:</p>
-                <ul>
-                    <li>By email: support@proba.in</li>
-                    <li>By visiting this page on our website: <a href="/contact-us">Contact Us</a></li>
-                </ul>
-            </div>
-        </div>
+        <LegalLayout>
+            <InteractiveLegalPage
+                title="Return Policy"
+                updatedAt={new Date().toISOString()}
+                introduction="Thank you for choosing Proba. We are committed to ensuring your satisfaction with our AI-powered learning tools. This policy outlines how returns apply to our digital services."
+                sections={sections}
+                icon="file"
+            />
+        </LegalLayout>
     );
 }

@@ -138,7 +138,7 @@ export function InteractiveLegalPage({ title, updatedAt, introduction, sections,
                                 Last Updated: {formattedDate}
                             </Badge>
                             <span className="hidden md:inline text-border">|</span>
-                            <span>{Math.ceil(JSON.stringify(sections).length / 2000)} min read</span>
+                            <span>{Math.ceil(sections.reduce((acc, section) => acc + section.title.length + (typeof section.content === 'string' ? section.content.length : 500), 0) / 2000)} min read</span>
                         </div>
                         <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
                             <p>{introduction}</p>

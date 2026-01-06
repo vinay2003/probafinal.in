@@ -1,62 +1,42 @@
 'use client';
 
-import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
-
-const stats = [
-    { value: 95, suffix: "%", label: "Success Rate" },
-    { value: 50, suffix: "k+", label: "Active Users" },
-    { value: 100, suffix: "+", label: "Exams Covered" },
-    { value: 24, suffix: "/7", label: "AI Availability" },
-];
+import { Check } from 'lucide-react';
 
 export function Benefits() {
-    const container = useRef<HTMLDivElement>(null);
-
-    useGSAP(() => {
-        // Select all elements with class 'stat-value'
-        const items = gsap.utils.toArray('.stat-value');
-
-        items.forEach((item: any) => {
-            const targetValue = parseInt(item.getAttribute('data-value'));
-
-            gsap.fromTo(item,
-                { innerText: 0 },
-                {
-                    innerText: targetValue,
-                    duration: 2,
-                    scrollTrigger: {
-                        trigger: container.current,
-                        start: 'top 80%',
-                    },
-                    snap: { innerText: 1 }, // Snap to whole numbers
-                    ease: "power2.out",
-                    onUpdate: function () {
-                        item.innerHTML = Math.ceil(this.targets()[0].innerText);
-                    }
-                }
-            );
-        });
-
-    }, { scope: container });
+    const benefits = [
+        'Save 100+ hours of study time',
+        'Get real-time feedback on errors',
+        'Access study materials offline',
+        'Join a community of achievers',
+        'Affordable premium plans',
+        'Guaranteed score improvement'
+    ];
 
     return (
-        <section ref={container} className="py-20 bg-primary/5 border-y border-border/50">
-            <div className="container mx-auto px-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {stats.map((stat, i) => (
-                        <div key={i} className="flex flex-col items-center gap-2">
-                            <div className="flex items-baseline text-4xl md:text-6xl font-black text-primary tracking-tighter">
-                                <span className="stat-value" data-value={stat.value}>0</span>
-                                <span>{stat.suffix}</span>
+        <section className="py-20 bg-background">
+            <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+                <div className="w-full md:w-1/2">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6">Unlock Your True Potential</h2>
+                    <p className="text-lg text-muted-foreground mb-8">
+                        Don't just study harder, study smarter. Our AI adapts to your learning style to maximize retention and minimize burnout.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {benefits.map((benefit, idx) => (
+                            <div key={idx} className="flex items-center gap-3">
+                                <div className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                                    <Check className="w-3 h-3" />
+                                </div>
+                                <span className="font-medium text-foreground/90">{benefit}</span>
                             </div>
-                            <p className="text-sm md:text-base text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                </div>
+                <div className="w-full md:w-1/2 relative h-[400px] bg-muted/20 rounded-2xl overflow-hidden">
+                    {/* Placeholder for an image */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10" />
+                    <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30 font-bold text-2xl">
+                        Student Success Image
+                    </div>
                 </div>
             </div>
         </section>

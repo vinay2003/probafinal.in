@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import JsonLd from '@/components/seo/json-ld';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
@@ -6,7 +7,7 @@ import { FirebaseClientProvider } from '@/firebase';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeWrapper } from '@/components/theme-wrapper';
-import { AdSenseWrapper } from '@/components/ads/AdSenseWrapper';
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://probafinal.in'),
@@ -87,10 +88,17 @@ export default function RootLayout({
           <FirebaseClientProvider>
             <ThemeWrapper>
               <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern -z-10"></div>
-              <AdSenseWrapper>
-                <JsonLd />
-                {children}
-              </AdSenseWrapper>
+
+              <Script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6943163093297878"
+                crossOrigin="anonymous"
+                strategy="afterInteractive"
+              />
+
+              <JsonLd />
+              {children}
+
               <Toaster />
             </ThemeWrapper>
           </FirebaseClientProvider>

@@ -10,6 +10,11 @@
     "install:all": "npm install && npm install --workspaces"
   },
   "devDependencies": {
+    "@types/animejs": "^3.1.13",
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "animejs": "^3.2.2",
+    "gsap": "^3.14.2"
   }
 }

@@ -1,44 +1,35 @@
 'use client';
 
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 export function CTA() {
     return (
-        <section className="py-24 px-6 md:px-12 bg-background">
-            <div className="container mx-auto">
-                <div className="relative rounded-3xl overflow-hidden bg-primary px-6 py-16 md:px-20 md:py-24 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12 shadow-2xl shadow-primary/20">
+        <section className="py-20 lg:py-32 relative overflow-hidden">
+            <div className="absolute inset-0 bg-primary/10 -z-10" />
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-10 pointer-events-none">
-                        <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="currentColor" />
-                        </svg>
-                    </div>
-
-                    <div className="relative z-10 max-w-2xl">
-                        <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-6">
-                            Ready to ace your next exam?
-                        </h2>
-                        <p className="text-primary-foreground/90 text-lg md:text-xl leading-relaxed">
-                            Start your journey with Proba today. Get personalized study plans, AI-driven practice, and real-time feedback.
-                        </p>
-                    </div>
-
-                    <div className="relative z-10 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                        <Button size="lg" className="h-14 px-8 bg-background text-primary hover:bg-background/90 font-bold text-lg shadow-lg shrink-0" asChild>
-                            <Link href="/subscription">
-                                Get Started Now <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
+            <div className="container mx-auto px-4 text-center">
+                <h2 className="text-3xl md:text-5xl font-bold mb-6 max-w-2xl mx-auto">
+                    Ready to Transform Your Study Routine?
+                </h2>
+                <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
+                    Join thousands of students who are already mastering their exams with Proba.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Link href="/auth/signup">
+                        <Button size="lg" className="h-12 px-8 text-base rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all">
+                            Start Learning Now
+                            <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
-                        <Button size="lg" variant="outline" className="h-14 px-8 text-primary-foreground border-primary-foreground hover:bg-primary-foreground/10 text-lg shrink-0" asChild>
-                            <Link href="/login">
-                                Log In
-                            </Link>
+                    </Link>
+                    <Link href="/contact-us">
+                        <Button variant="outline" size="lg" className="h-12 px-8 text-base rounded-full bg-background/50 backdrop-blur-sm">
+                            Contact Sales
                         </Button>
-                    </div>
-
+                    </Link>
                 </div>
             </div>
         </section>

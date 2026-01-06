@@ -1,102 +1,71 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { animate } from 'animejs';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Bot, LineChart, FileText, BrainCircuit, Globe, Code } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Brain, Mic, ListChecks, FileText, Zap, BarChart } from 'lucide-react';
 
 const features = [
     {
-        title: "AI Mock Interviews",
-        description: "Practice with realistic AI interviewers that give real-time feedback on your speech and content.",
-        icon: Bot,
+        icon: Mic,
+        title: 'AI Mock Interviews',
+        description: 'Practice speaking with our AI examiner that provides real-time feedback on pronunciation and grammar.',
     },
     {
-        title: "Smart Flashcards",
-        description: "Generate flashcards from any topic instantly. Spaced repetition ensures you never forget.",
+        icon: Brain,
+        title: 'Adaptive Quizzes',
+        description: 'Questions that adapt to your skill level, focusing on areas where you need the most improvement.',
+    },
+    {
+        icon: Zap,
+        title: 'Smart Flashcards',
+        description: 'Generate flashcards instantly from any text and use spaced repetition to memorize effectively.',
+    },
+    {
         icon: FileText,
+        title: 'Document Summarizer',
+        description: 'Upload complex study materials and get concise, easy-to-understand summaries in seconds.',
     },
     {
-        title: "Coding Challenges",
-        description: "Live coding environment with AI hints and solution analysis for technical interviews.",
-        icon: Code,
+        icon: ListChecks,
+        title: 'Personalized Study Plans',
+        description: 'Get a custom daily schedule tailored to your exam date and target score.',
     },
     {
-        title: "Global Exams Prep",
-        description: "Specialized modules for IELTS, TOEFL, GRE, and UPSC with scoring guidelines.",
-        icon: Globe,
-    },
-    {
-        title: "Resume Optimizer",
-        description: "ATS-friendly resume scanning and improvement suggestions to get you shortlisted.",
-        icon: BrainCircuit,
-    },
-    {
-        title: "Detailed Analytics",
-        description: "Track your progress with in-depth charts and performance metrics over time.",
-        icon: LineChart,
+        icon: BarChart,
+        title: 'Deep Analytics',
+        description: 'Track your progress with detailed charts and insights to optimize your study strategy.',
     },
 ];
 
 export function Features() {
-    // We can use a ref to store references to cards for animations
-    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-    const handleMouseEnter = (index: number) => {
-        const card = cardsRef.current[index];
-        if (!card) return;
-
-        animate(card, {
-            scale: 1.05,
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-            duration: 300,
-            easing: 'easeOutExpo'
-        });
-    };
-
-    const handleMouseLeave = (index: number) => {
-        const card = cardsRef.current[index];
-        if (!card) return;
-
-        animate(card, {
-            scale: 1,
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            duration: 300,
-            easing: 'easeOutExpo'
-        });
-    };
-
     return (
-        <section id="features" className="py-24 bg-muted/30">
-            <div className="container mx-auto px-6">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Everything you need to excel</h2>
-                    <p className="text-muted-foreground text-lg">Powerful tools designed to cover every aspect of your preparation journey.</p>
+        <section className="py-20 lg:py-32 bg-muted/30">
+            <div className="container mx-auto px-4">
+                <div className="text-center max-w-2xl mx-auto mb-20">
+                    <span className="text-primary font-medium text-sm tracking-widest uppercase mb-3 block">Features</span>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6">Everything You Need to Succeed</h2>
+                    <p className="text-muted-foreground text-lg">
+                        Powerful tools built to help you master every aspect of your exam preparation.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {features.map((feature, index) => (
-                        <div
-                            key={index}
-                            ref={el => { cardsRef.current[index] = el }}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                            onMouseLeave={() => handleMouseLeave(index)}
-                            className="h-full"
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {features.map((feature, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: idx * 0.1 }}
+                            className="p-8 rounded-2xl bg-background border hover:border-primary/50 transition-colors group"
                         >
-                            <Card className="h-full border-border/50 bg-background hover:border-primary/50 transition-colors">
-                                <CardHeader>
-                                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-                                        <feature.icon className="w-6 h-6" />
-                                    </div>
-                                    <CardTitle className="text-xl">{feature.title}</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p className="text-muted-foreground">
-                                        {feature.description}
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        </div>
+                            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                <feature.icon className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                            <p className="text-muted-foreground leading-relaxed">
+                                {feature.description}
+                            </p>
+                        </motion.div>
                     ))}
                 </div>
             </div>

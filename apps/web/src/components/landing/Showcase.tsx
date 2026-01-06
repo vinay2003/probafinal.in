@@ -1,104 +1,78 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Badge } from '@/components/ui/badge';
-import Image from 'next/image';
-
-gsap.registerPlugin(ScrollTrigger);
-
-const steps = [
-    {
-        id: 1,
-        title: "1. Create Your Study Plan",
-        description: "Tell Proba your exam date and goals. Our AI builds a personalized roadmap adapting to your daily schedule.",
-        badge: "Planning",
-        color: "bg-blue-500",
-    },
-    {
-        id: 2,
-        title: "2. Practice with AI",
-        description: "Engage in realistic mock interviews and solve adaptive quizzes that get harder as you improve.",
-        badge: "Execution",
-        color: "bg-purple-500",
-    },
-    {
-        id: 3,
-        title: "3. Analyze & Improve",
-        description: "Get instant feedback on your performance. Identify weak spots and conquer them with targeted repetition.",
-        badge: "Optimization",
-        color: "bg-green-500",
-    }
-];
+import { motion } from 'framer-motion';
 
 export function Showcase() {
-    const container = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLDivElement>(null);
-    const [activeStep, setActiveStep] = useState(0);
-
-    useGSAP(() => {
-        const sectionHeight = triggerRef.current!.offsetHeight;
-        const scrollHeight = sectionHeight - window.innerHeight;
-
-        ScrollTrigger.create({
-            trigger: triggerRef.current,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-            onUpdate: (self) => {
-                // Calculate which step should be active based on scroll progress
-                const progress = self.progress;
-                const stepIndex = Math.floor(progress * steps.length);
-                setActiveStep(Math.min(stepIndex, steps.length - 1));
-            },
-        });
-    }, { scope: container });
-
     return (
-        <section id="showcase" ref={container} className="bg-background">
-            <div ref={triggerRef} className="relative h-[300vh]"> {/* 300vh for 3 steps scroll space */}
-                <div className="sticky top-0 h-screen overflow-hidden">
-                    <div className="container mx-auto px-6 h-full flex items-center">
+        <section className="py-20 lg:py-32 bg-muted/30 overflow-hidden">
+            <div className="container mx-auto px-4">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6">See It in Action</h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        Experience the intuitive interface designed to keep you focused and productive.
+                    </p>
+                </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full items-center">
+                <div className="relative max-w-6xl mx-auto">
+                    {/* Main Dashboard Mockup */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative rounded-xl border bg-background shadow-2xl overflow-hidden aspect-video group"
+                    >
+                        <div className="absolute inset-0 bg-secondary/5 group-hover:bg-transparent transition-colors duration-500" />
 
-                            {/* Left Side: Visuals (Dynamic) */}
-                            <div className="order-2 lg:order-1 relative h-[400px] md:h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl border border-border bg-muted/20">
-                                {/* 
-                    In a real app, I'd map over images and fade them in/out based on activeStep.
-                    For now, using CSS transitions on background/content.
-                 */}
-                                {steps.map((step, index) => (
-                                    <div
-                                        key={step.id}
-                                        className={`absolute inset-0 transition-opacity duration-500 flex items-center justify-center p-8 ${activeStep === index ? 'opacity-100' : 'opacity-0'}`}
-                                    >
-                                        <div className={`w-full h-full rounded-xl ${step.color}/10 border border-${step.color}/20 flex items-center justify-center relative overflow-hidden group`}>
-                                            <div className={`absolute -right-20 -bottom-20 w-64 h-64 ${step.color}/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700`} />
-                                            <h3 className={`text-4xl font-bold ${step.color.replace('bg-', 'text-')} opacity-20`}>Step 0{step.id}</h3>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Right Side: Text (Static List with Highlights) */}
-                            <div className="order-1 lg:order-2 flex flex-col justify-center space-y-12">
-                                {steps.map((step, index) => (
-                                    <div
-                                        key={step.id}
-                                        className={`transition-all duration-500 p-6 rounded-xl border ${activeStep === index ? 'bg-secondary/50 border-primary/50 translate-x-4' : 'border-transparent opacity-40'}`}
-                                    >
-                                        <Badge variant="outline" className="mb-4">{step.badge}</Badge>
-                                        <h3 className="text-3xl font-bold mb-3">{step.title}</h3>
-                                        <p className="text-muted-foreground text-lg">{step.description}</p>
-                                    </div>
-                                ))}
-                            </div>
-
+                        {/* Simulated UI Content - Header */}
+                        <div className="h-12 border-b bg-muted/20 flex items-center px-4 gap-2">
+                            <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                            <div className="w-3 h-3 rounded-full bg-amber-400/80" />
+                            <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
+                            <div className="ml-4 w-64 h-6 rounded-md bg-muted/40" />
                         </div>
-                    </div>
+
+                        {/* Simulated UI Content - Body */}
+                        <div className="p-6 md:p-8 grid grid-cols-12 gap-6 h-full bg-background/50 backdrop-blur-sm">
+                            {/* Sidebar */}
+                            <div className="col-span-3 space-y-3 hidden md:block">
+                                {[1, 2, 3, 4, 5].map((i) => (
+                                    <div key={i} className="h-10 w-full rounded-md bg-muted/30 animate-pulse" style={{ animationDelay: `${i * 100}ms` }} />
+                                ))}
+                            </div>
+                            {/* Main Content */}
+                            <div className="col-span-12 md:col-span-9 space-y-6">
+                                <div className="h-32 w-full rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center">
+                                    <span className="text-primary font-medium">Performance Analytics Chart</span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="h-24 w-full rounded-lg bg-muted/20" />
+                                    <div className="h-24 w-full rounded-lg bg-muted/20" />
+                                </div>
+                                <div className="h-40 w-full rounded-lg bg-muted/20" />
+                            </div>
+                        </div>
+
+                        {/* Overlay Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none md:hidden" />
+                    </motion.div>
+
+                    {/* Floating Elements (Decorative) */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="absolute -right-12 -bottom-12 w-64 h-40 bg-background border rounded-lg shadow-xl p-4 hidden lg:block"
+                    >
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center text-xs font-bold">95%</div>
+                            <div className="text-sm font-semibold">Speaking Score</div>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div className="h-full w-[95%] bg-green-500" />
+                        </div>
+                        <p className="mt-3 text-xs text-muted-foreground">Great pronunciation! Keep practicing intonation.</p>
+                    </motion.div>
                 </div>
             </div>
         </section>

@@ -1,63 +1,68 @@
 'use client';
 
 import Link from 'next/link';
+import { Twitter, Instagram, Linkedin, Github } from 'lucide-react';
 
 export function Footer() {
-    const currentYear = new Date().getFullYear();
-
     return (
-        <footer className="bg-muted/30 border-t border-border mt-20">
-            <div className="container mx-auto px-6 py-12 md:py-16">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
-                    {/* Brand */}
-                    <div className="flex flex-col gap-4">
-                        <Link href="/landing" className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                                P
-                            </div>
-                            <span className="text-xl font-bold tracking-tight">Proba</span>
+        <footer className="bg-background border-t pt-16 pb-8">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+                    <div className="col-span-2 lg:col-span-2">
+                        <Link href="/" className="font-bold text-2xl flex items-center gap-2 mb-4">
+                            Proba.
                         </Link>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                            Empowering students worldwide with AI-driven tools for exam success.
+                        <p className="text-muted-foreground max-w-xs mb-6">
+                            AI-powered study companion designed to help you ace your global exams with confidence.
                         </p>
-                    </div>
-
-                    {/* Links 1 */}
-                    <div className="flex flex-col gap-3">
-                        <h3 className="font-semibold text-foreground">Platform</h3>
-                        <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-primary transition-colors">Dashboard</Link>
-                        <Link href="/subscription" className="text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
-                        <Link href="#features" className="text-sm text-muted-foreground hover:text-primary transition-colors">Features</Link>
-                    </div>
-
-                    {/* Links 2 */}
-                    <div className="flex flex-col gap-3">
-                        <h3 className="font-semibold text-foreground">Resources</h3>
-                        <Link href="/blog" className="text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
-                        <Link href="/guides" className="text-sm text-muted-foreground hover:text-primary transition-colors">Study Guides</Link>
-                        <Link href="/help" className="text-sm text-muted-foreground hover:text-primary transition-colors">Help Center</Link>
-                    </div>
-
-                    {/* Legal */}
-                    <div className="flex flex-col gap-3">
-                        <h3 className="font-semibold text-foreground">Legal</h3>
-                        <Link href="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link>
-                        <Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
-                        <Link href="/cookies" className="text-sm text-muted-foreground hover:text-primary transition-colors">Cookie Policy</Link>
-                    </div>
-                </div>
-
-                <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-sm text-muted-foreground">© {currentYear} Proba Inc. All rights reserved.</p>
-
-                    <div className="flex items-center gap-6">
-                        {/* Socials placeholder */}
                         <div className="flex gap-4">
-                            <Link href="#" aria-label="Twitter" className="text-muted-foreground hover:text-foreground">
-                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                            <Link href="#" className="p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors">
+                                <Twitter className="w-5 h-5" />
+                            </Link>
+                            <Link href="#" className="p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors">
+                                <Instagram className="w-5 h-5" />
+                            </Link>
+                            <Link href="#" className="p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors">
+                                <Linkedin className="w-5 h-5" />
+                            </Link>
+                            <Link href="#" className="p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors">
+                                <Github className="w-5 h-5" />
                             </Link>
                         </div>
                     </div>
+
+                    <div>
+                        <h4 className="font-semibold mb-6">Product</h4>
+                        <ul className="space-y-4 text-sm text-muted-foreground">
+                            <li><Link href="/features" className="hover:text-foreground transition-colors">Features</Link></li>
+                            <li><Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link></li>
+                            <li><Link href="/testimonials" className="hover:text-foreground transition-colors">Testimonials</Link></li>
+                            <li><Link href="/faq" className="hover:text-foreground transition-colors">FAQ</Link></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="font-semibold mb-6">Company</h4>
+                        <ul className="space-y-4 text-sm text-muted-foreground">
+                            <li><Link href="/about-us" className="hover:text-foreground transition-colors">About Us</Link></li>
+                            <li><Link href="/careers" className="hover:text-foreground transition-colors">Careers</Link></li>
+                            <li><Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link></li>
+                            <li><Link href="/contact-us" className="hover:text-foreground transition-colors">Contact</Link></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="font-semibold mb-6">Legal</h4>
+                        <ul className="space-y-4 text-sm text-muted-foreground">
+                            <li><Link href="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
+                            <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
+                            <li><Link href="/cookie-policy" className="hover:text-foreground transition-colors">Cookie Policy</Link></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="border-t pt-8 text-center text-sm text-muted-foreground">
+                    © {new Date().getFullYear()} Proba Global. All rights reserved.
                 </div>
             </div>
         </footer>

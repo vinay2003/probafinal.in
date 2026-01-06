@@ -16,5 +16,10 @@
   "dependencies": {
     "animejs": "^3.2.2",
     "gsap": "^3.14.2"
+  },
+  "overrides": {
+    "glob": "^10.4.5",
+    "rimraf": "^5.0.0",
+    "eslint": "^9.0.0"
   }
 }

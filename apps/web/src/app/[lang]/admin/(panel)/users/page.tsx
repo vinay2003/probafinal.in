@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { getAdminUsers } from '@/app/actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminUsersPage() {
     const users = await getAdminUsers();
 

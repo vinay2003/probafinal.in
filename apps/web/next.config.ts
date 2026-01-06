@@ -57,15 +57,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/landing',
-        destination: '/',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default withPWA(nextConfig);

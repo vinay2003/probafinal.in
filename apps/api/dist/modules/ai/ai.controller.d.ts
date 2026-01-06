@@ -1,4 +1,4 @@
-import { AiService } from './ai.service';
+import { AiService } from "./ai.service";
 export declare class AiController {
     private readonly aiService;
     constructor(aiService: AiService);
@@ -25,7 +25,7 @@ export declare class AiController {
     }): Promise<any>;
     analyzeWriting(body: {
         text: string;
-        taskType: 'ielts_task1' | 'ielts_task2' | 'toefl_integrated' | 'toefl_independent';
+        taskType: "ielts_task1" | "ielts_task2" | "toefl_integrated" | "toefl_independent";
     }): Promise<any>;
     chat(body: {
         message: string;

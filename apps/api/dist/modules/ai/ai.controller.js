@@ -58,91 +58,91 @@ let AiController = class AiController {
 };
 exports.AiController = AiController;
 __decorate([
-    (0, common_1.Post)('quiz'),
+    (0, common_1.Post)("quiz"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "generateQuiz", null);
 __decorate([
-    (0, common_1.Post)('flashcards'),
+    (0, common_1.Post)("flashcards"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "generateFlashcards", null);
 __decorate([
-    (0, common_1.Post)('summarize'),
+    (0, common_1.Post)("summarize"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "summarize", null);
 __decorate([
-    (0, common_1.Post)('resume'),
+    (0, common_1.Post)("resume"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "optimizeResume", null);
 __decorate([
-    (0, common_1.Post)('speaking'),
+    (0, common_1.Post)("speaking"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "analyzeSpeaking", null);
 __decorate([
-    (0, common_1.Post)('writing'),
+    (0, common_1.Post)("writing"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "analyzeWriting", null);
 __decorate([
-    (0, common_1.Post)('chat'),
+    (0, common_1.Post)("chat"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "chat", null);
 __decorate([
-    (0, common_1.Post)('interview'),
+    (0, common_1.Post)("interview"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "interview", null);
 __decorate([
-    (0, common_1.Post)('interview/analyze'),
+    (0, common_1.Post)("interview/analyze"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "analyzeInterview", null);
 __decorate([
-    (0, common_1.Post)('coding/generate'),
+    (0, common_1.Post)("coding/generate"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "generateCoding", null);
 __decorate([
-    (0, common_1.Post)('coding/evaluate'),
+    (0, common_1.Post)("coding/evaluate"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "evaluateCoding", null);
 __decorate([
-    (0, common_1.Post)('sql/generate'),
+    (0, common_1.Post)("sql/generate"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AiController.prototype, "generateSql", null);
 exports.AiController = AiController = __decorate([
-    (0, common_1.Controller)('ai'),
+    (0, common_1.Controller)("ai"),
     __metadata("design:paramtypes", [ai_service_1.AiService])
 ], AiController);
 //# sourceMappingURL=ai.controller.js.map

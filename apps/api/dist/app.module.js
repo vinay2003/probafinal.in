@@ -28,7 +28,7 @@ exports.AppModule = AppModule = __decorate([
             payments_module_1.PaymentsModule,
             career_module_1.CareerModule,
             exams_module_1.ExamsModule,
-            admin_module_1.AdminModule
+            admin_module_1.AdminModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [],

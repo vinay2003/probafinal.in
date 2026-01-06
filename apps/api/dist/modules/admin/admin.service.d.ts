@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import * as admin from "firebase-admin";
 export declare class AdminService {
     private firebaseApp;
     private readonly logger;

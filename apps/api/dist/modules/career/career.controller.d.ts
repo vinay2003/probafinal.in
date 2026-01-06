@@ -1,4 +1,4 @@
-import { CareerService } from './career.service';
+import { CareerService } from "./career.service";
 export declare class CareerController {
     private readonly careerService;
     constructor(careerService: CareerService);

@@ -31,28 +31,28 @@ let CareerController = class CareerController {
 };
 exports.CareerController = CareerController;
 __decorate([
-    (0, common_1.Post)('interview/start'),
+    (0, common_1.Post)("interview/start"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CareerController.prototype, "startInterview", null);
 __decorate([
-    (0, common_1.Post)('interview/analyze'),
+    (0, common_1.Post)("interview/analyze"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CareerController.prototype, "analyzeInterview", null);
 __decorate([
-    (0, common_1.Post)('resume/optimize'),
+    (0, common_1.Post)("resume/optimize"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CareerController.prototype, "optimizeResume", null);
 exports.CareerController = CareerController = __decorate([
-    (0, common_1.Controller)('career'),
+    (0, common_1.Controller)("career"),
     __metadata("design:paramtypes", [career_service_1.CareerService])
 ], CareerController);
 //# sourceMappingURL=career.controller.js.map

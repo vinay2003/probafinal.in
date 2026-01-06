@@ -1,9 +1,9 @@
-import { ExamsService } from './exams.service';
+import { ExamsService } from "./exams.service";
 export declare class ExamsController {
     private readonly examsService;
     constructor(examsService: ExamsService);
     getNextQuestion(body: {
-        currentDifficulty: 'easy' | 'medium' | 'hard';
+        currentDifficulty: "easy" | "medium" | "hard";
         previousCorrect: boolean;
     }): {
         question: {

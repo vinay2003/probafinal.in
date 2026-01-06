@@ -28,21 +28,21 @@ let ExamsController = class ExamsController {
 };
 exports.ExamsController = ExamsController;
 __decorate([
-    (0, common_1.Post)('next'),
+    (0, common_1.Post)("next"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "getNextQuestion", null);
 __decorate([
-    (0, common_1.Post)('submit'),
+    (0, common_1.Post)("submit"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "submitAnswer", null);
 exports.ExamsController = ExamsController = __decorate([
-    (0, common_1.Controller)('exams'),
+    (0, common_1.Controller)("exams"),
     __metadata("design:paramtypes", [exams_service_1.ExamsService])
 ], ExamsController);
 //# sourceMappingURL=exams.controller.js.map

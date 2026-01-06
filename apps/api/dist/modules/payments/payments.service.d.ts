@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import * as admin from "firebase-admin";
 export declare class PaymentsService {
     private firebaseApp;
     private razorpay;

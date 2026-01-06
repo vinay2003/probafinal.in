@@ -26,9 +26,9 @@ let PaymentsService = class PaymentsService {
             });
         }
     }
-    async createOrder(amount, currency = 'INR') {
+    async createOrder(amount, currency = "INR") {
         if (!this.razorpay)
-            throw new common_1.BadRequestException('Razorpay not configured');
+            throw new common_1.BadRequestException("Razorpay not configured");
         const options = {
             amount: amount * 100,
             currency,
@@ -38,18 +38,18 @@ let PaymentsService = class PaymentsService {
             const order = await this.razorpay.orders.create(options);
             return order;
         }
-        catch (error) {
-            throw new common_1.BadRequestException('Could not create order');
+        catch (_a) {
+            throw new common_1.BadRequestException("Could not create order");
         }
     }
     async verifyPayment(paymentId, orderId, signature, userId) {
         if (!this.razorpay)
-            throw new common_1.BadRequestException('Razorpay not configured');
+            throw new common_1.BadRequestException("Razorpay not configured");
         if (this.firebaseApp) {
             const db = this.firebaseApp.firestore();
-            await db.collection('users').doc(userId).set({
-                subscriptionTier: 'pro',
-                subscriptionDate: new Date().toISOString()
+            await db.collection("users").doc(userId).set({
+                subscriptionTier: "pro",
+                subscriptionDate: new Date().toISOString(),
             }, { merge: true });
         }
         return { success: true };
@@ -58,7 +58,7 @@ let PaymentsService = class PaymentsService {
 exports.PaymentsService = PaymentsService;
 exports.PaymentsService = PaymentsService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('FIREBASE_APP')),
+    __param(0, (0, common_1.Inject)("FIREBASE_APP")),
     __metadata("design:paramtypes", [Object])
 ], PaymentsService);
 //# sourceMappingURL=payments.service.js.map

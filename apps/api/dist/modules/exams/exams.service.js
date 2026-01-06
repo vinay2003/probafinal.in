@@ -11,45 +11,81 @@ const common_1 = require("@nestjs/common");
 let ExamsService = class ExamsService {
     constructor() {
         this.questionBank = {
-            'easy': [
-                { id: 'e1', question: "What is 2+2?", options: ["3", "4", "5"], answer: "4", difficulty: 'easy' },
-                { id: 'e2', question: "Capital of India?", options: ["Mumbai", "Delhi", "Chennai"], answer: "Delhi", difficulty: 'easy' }
+            easy: [
+                {
+                    id: "e1",
+                    question: "What is 2+2?",
+                    options: ["3", "4", "5"],
+                    answer: "4",
+                    difficulty: "easy",
+                },
+                {
+                    id: "e2",
+                    question: "Capital of India?",
+                    options: ["Mumbai", "Delhi", "Chennai"],
+                    answer: "Delhi",
+                    difficulty: "easy",
+                },
             ],
-            'medium': [
-                { id: 'm1', question: "Square root of 144?", options: ["10", "11", "12"], answer: "12", difficulty: 'medium' },
-                { id: 'm2', question: "Who wrote Romeo and Juliet?", options: ["Shakespeare", "Dickens", "Austen"], answer: "Shakespeare", difficulty: 'medium' }
+            medium: [
+                {
+                    id: "m1",
+                    question: "Square root of 144?",
+                    options: ["10", "11", "12"],
+                    answer: "12",
+                    difficulty: "medium",
+                },
+                {
+                    id: "m2",
+                    question: "Who wrote Romeo and Juliet?",
+                    options: ["Shakespeare", "Dickens", "Austen"],
+                    answer: "Shakespeare",
+                    difficulty: "medium",
+                },
             ],
-            'hard': [
-                { id: 'h1', question: "Derivative of x^2?", options: ["x", "2x", "x^2"], answer: "2x", difficulty: 'hard' },
-                { id: 'h2', question: "Quantum entanglement implies?", options: ["Faster than light info", "Hidden variables", "Non-locality"], answer: "Non-locality", difficulty: 'hard' }
-            ]
+            hard: [
+                {
+                    id: "h1",
+                    question: "Derivative of x^2?",
+                    options: ["x", "2x", "x^2"],
+                    answer: "2x",
+                    difficulty: "hard",
+                },
+                {
+                    id: "h2",
+                    question: "Quantum entanglement implies?",
+                    options: ["Faster than light info", "Hidden variables", "Non-locality"],
+                    answer: "Non-locality",
+                    difficulty: "hard",
+                },
+            ],
         };
     }
     getNextQuestion(currentDifficulty, previousCorrect) {
         let nextDifficulty = currentDifficulty;
         if (previousCorrect) {
-            if (currentDifficulty === 'easy')
-                nextDifficulty = 'medium';
-            else if (currentDifficulty === 'medium')
-                nextDifficulty = 'hard';
+            if (currentDifficulty === "easy")
+                nextDifficulty = "medium";
+            else if (currentDifficulty === "medium")
+                nextDifficulty = "hard";
         }
         else {
-            if (currentDifficulty === 'hard')
-                nextDifficulty = 'medium';
-            else if (currentDifficulty === 'medium')
-                nextDifficulty = 'easy';
+            if (currentDifficulty === "hard")
+                nextDifficulty = "medium";
+            else if (currentDifficulty === "medium")
+                nextDifficulty = "easy";
         }
         const questions = this.questionBank[nextDifficulty];
         const randomQ = questions[Math.floor(Math.random() * questions.length)];
         return {
             question: randomQ,
-            nextDifficulty
+            nextDifficulty,
         };
     }
     submitAnswer(questionId, answer) {
         let found = null;
         for (const level in this.questionBank) {
-            found = this.questionBank[level].find(q => q.id === questionId);
+            found = this.questionBank[level].find((q) => q.id === questionId);
             if (found)
                 break;
         }
@@ -57,7 +93,7 @@ let ExamsService = class ExamsService {
             return { correct: false, correctAnswer: null };
         return {
             correct: found.answer === answer,
-            correctAnswer: found.answer
+            correctAnswer: found.answer,
         };
     }
 };

@@ -17,15 +17,15 @@ exports.FirebaseModule = FirebaseModule = __decorate([
     (0, common_1.Module)({
         providers: [
             {
-                provide: 'FIREBASE_APP',
+                provide: "FIREBASE_APP",
                 useFactory: () => {
                     if (!admin.apps.length) {
                         try {
                             return admin.initializeApp({
-                                credential: admin.credential.applicationDefault()
+                                credential: admin.credential.applicationDefault(),
                             });
                         }
-                        catch (e) {
+                        catch (_a) {
                             console.warn("Firebase Admin failed to initialize (likely missing creds).");
                             return null;
                         }
@@ -34,7 +34,7 @@ exports.FirebaseModule = FirebaseModule = __decorate([
                 },
             },
         ],
-        exports: ['FIREBASE_APP'],
+        exports: ["FIREBASE_APP"],
     })
 ], FirebaseModule);
 //# sourceMappingURL=firebase.module.js.map

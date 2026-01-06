@@ -16,26 +16,26 @@ let AiService = class AiService {
     constructor() {
         const apiKey = process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY;
         if (!apiKey) {
-            console.error('CRITICAL: GOOGLE_GENAI_API_KEY is missing in API environment.');
+            console.error("CRITICAL: GOOGLE_GENAI_API_KEY is missing in API environment.");
         }
-        this.genAI = new generative_ai_1.GoogleGenerativeAI(apiKey || '');
+        this.genAI = new generative_ai_1.GoogleGenerativeAI(apiKey || "");
         this.model = this.genAI.getGenerativeModel({
             model: "gemini-flash-latest",
         });
         this.jsonModel = this.genAI.getGenerativeModel({
             model: "gemini-flash-latest",
             generationConfig: {
-                responseMimeType: "application/json"
-            }
+                responseMimeType: "application/json",
+            },
         });
     }
     async chat(message, history) {
         try {
-            let processedHistory = history.map(h => ({
-                role: h.role === 'ai' ? 'model' : 'user',
-                parts: [{ text: h.parts }]
+            let processedHistory = history.map((h) => ({
+                role: h.role === "ai" ? "model" : "user",
+                parts: [{ text: h.parts }],
             }));
-            if (processedHistory.length > 0 && processedHistory[0].role === 'model') {
+            if (processedHistory.length > 0 && processedHistory[0].role === "model") {
                 processedHistory = processedHistory.slice(1);
             }
             const chat = this.model.startChat({
@@ -51,9 +51,9 @@ let AiService = class AiService {
         catch (error) {
             console.error("Chat Error:", error);
             if (error.status === 429) {
-                throw new common_1.HttpException('AI Busy (Rate Limit). Please wait a moment.', common_1.HttpStatus.TOO_MANY_REQUESTS);
+                throw new common_1.HttpException("AI Busy (Rate Limit). Please wait a moment.", common_1.HttpStatus.TOO_MANY_REQUESTS);
             }
-            throw new common_1.InternalServerErrorException('Chat Failed: ' + (error.message || "Unknown error"));
+            throw new common_1.InternalServerErrorException("Chat Failed: " + (error.message || "Unknown error"));
         }
     }
     async _retryWithBackoff(fn, retries = 3, delay = 1000) {
@@ -63,7 +63,7 @@ let AiService = class AiService {
         catch (error) {
             if (retries > 0 && error.status === 429) {
                 console.warn(`Rate limited. Retrying in ${delay}ms...`);
-                await new Promise(resolve => setTimeout(resolve, delay));
+                await new Promise((resolve) => setTimeout(resolve, delay));
                 return this._retryWithBackoff(fn, retries - 1, delay * 2);
             }
             throw error;
@@ -74,7 +74,7 @@ let AiService = class AiService {
       You are an expert educational content creator. Generate ${numberOfQuestions} high-quality, challenging multiple-choice questions for:
       Subject: ${subject}
       Topic: ${topic}
-      ${context ? `Context: ${context}` : ''}
+      ${context ? `Context: ${context}` : ""}
       
       Difficulty: Adaptive (Mix of easy, medium, hard).
       Each question must include 4 distinct options, the correct answer text, and a helpful hint.
@@ -96,7 +96,7 @@ let AiService = class AiService {
     async generateFlashcards(topic, numberOfCards, context) {
         const prompt = `
       You are an expert educator. Create ${numberOfCards} concise, high-quality flashcards on the topic: '${topic}'. 
-      ${context ? `Context: ${context}` : ''}
+      ${context ? `Context: ${context}` : ""}
       
       Return ONLY a JSON object with a "flashcards" array containing objects with 'front' (term/question) and 'back' (definition/answer) fields.
       
@@ -274,9 +274,12 @@ let AiService = class AiService {
             const result = await this._retryWithBackoff(async () => await this.jsonModel.generateContent(prompt));
             const response = await result.response;
             const text = response.text();
-            const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
-            const firstBrace = jsonStr.indexOf('{');
-            const lastBrace = jsonStr.lastIndexOf('}');
+            const jsonStr = text
+                .replace(/```json/g, "")
+                .replace(/```/g, "")
+                .trim();
+            const firstBrace = jsonStr.indexOf("{");
+            const lastBrace = jsonStr.lastIndexOf("}");
             if (firstBrace !== -1 && lastBrace !== -1) {
                 const cleanJson = jsonStr.substring(firstBrace, lastBrace + 1);
                 return JSON.parse(cleanJson);
@@ -286,9 +289,9 @@ let AiService = class AiService {
         catch (error) {
             console.error("AI Generation Failed:", error);
             if (error.status === 429) {
-                throw new common_1.HttpException('AI Busy (Rate Limit). Please wait a moment.', common_1.HttpStatus.TOO_MANY_REQUESTS);
+                throw new common_1.HttpException("AI Busy (Rate Limit). Please wait a moment.", common_1.HttpStatus.TOO_MANY_REQUESTS);
             }
-            throw new common_1.InternalServerErrorException('AI Service Failure: ' + (error.message || "Unknown error"));
+            throw new common_1.InternalServerErrorException("AI Service Failure: " + (error.message || "Unknown error"));
         }
     }
 };

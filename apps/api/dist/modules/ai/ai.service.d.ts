@@ -15,7 +15,7 @@ export declare class AiService {
     summarizeContent(content: string): Promise<any>;
     auditResume(resumeText: string, jobDescription: string): Promise<any>;
     analyzeSpeaking(transcript: string): Promise<any>;
-    analyzeWriting(text: string, taskType: 'ielts_task1' | 'ielts_task2' | 'toefl_integrated' | 'toefl_independent'): Promise<any>;
+    analyzeWriting(text: string, taskType: "ielts_task1" | "ielts_task2" | "toefl_integrated" | "toefl_independent"): Promise<any>;
     analyzeInterviewAnswer(question: string, transcript: string): Promise<any>;
     generateInterviewQuestions(role: string, experience: string, description: string): Promise<any>;
     generateCodingChallenge(difficulty: string, language: string): Promise<any>;

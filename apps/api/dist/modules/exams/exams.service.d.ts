@@ -1,6 +1,6 @@
 export declare class ExamsService {
     private questionBank;
-    getNextQuestion(currentDifficulty: 'easy' | 'medium' | 'hard', previousCorrect: boolean): {
+    getNextQuestion(currentDifficulty: "easy" | "medium" | "hard", previousCorrect: boolean): {
         question: {
             id: string;
             question: string;

@@ -26,8 +26,11 @@ let AdminService = AdminService_1 = class AdminService {
                 price: "49",
                 currency: "₹",
                 description: "Perfect for exam prep.",
-                features: ['Unlimited AI-powered quiz generation', 'AI feedback on your answers'],
-                active: true
+                features: [
+                    "Unlimited AI-powered quiz generation",
+                    "AI feedback on your answers",
+                ],
+                active: true,
             },
             {
                 name: "Pro Access",
@@ -35,29 +38,41 @@ let AdminService = AdminService_1 = class AdminService {
                 currency: "₹",
                 description: "The ultimate AI study companion.",
                 features: [
-                    'Unlimited AI-powered quiz generation',
-                    'AI Mock Interview practice',
-                    'ATS Resume Optimizer',
-                    'Document Summarizer'
+                    "Unlimited AI-powered quiz generation",
+                    "AI Mock Interview practice",
+                    "ATS Resume Optimizer",
+                    "Document Summarizer",
                 ],
-                active: true
-            }
+                active: true,
+            },
         ];
     }
     async getUsers() {
         if (!this.firebaseApp)
             return [];
         try {
-            const snapshot = await this.firebaseApp.firestore().collection('users').get();
-            return snapshot.docs.map(doc => {
+            const snapshot = await this.firebaseApp
+                .firestore()
+                .collection("users")
+                .get();
+            return snapshot.docs.map((doc) => {
                 const data = doc.data();
                 return {
                     id: doc.id,
                     name: data.displayName || data.email || "Unknown User",
                     email: data.email || "No Email",
-                    plan: data.subscriptionTier ? (data.subscriptionTier.charAt(0).toUpperCase() + data.subscriptionTier.slice(1)) : "Free",
+                    plan: data.subscriptionTier
+                        ? data.subscriptionTier.charAt(0).toUpperCase() +
+                            data.subscriptionTier.slice(1)
+                        : "Free",
                     status: "Active",
-                    date: data.createdAt ? new Date(data.createdAt.toDate ? data.createdAt.toDate() : data.createdAt).toISOString().split('T')[0] : "N/A"
+                    date: data.createdAt
+                        ? new Date(data.createdAt.toDate
+                            ? data.createdAt.toDate()
+                            : data.createdAt)
+                            .toISOString()
+                            .split("T")[0]
+                        : "N/A",
                 };
             });
         }
@@ -69,7 +84,11 @@ let AdminService = AdminService_1 = class AdminService {
     async getUser(id) {
         if (!this.firebaseApp)
             return null;
-        const doc = await this.firebaseApp.firestore().collection('users').doc(id).get();
+        const doc = await this.firebaseApp
+            .firestore()
+            .collection("users")
+            .doc(id)
+            .get();
         if (!doc.exists)
             return null;
         const data = doc.data();
@@ -79,17 +98,22 @@ let AdminService = AdminService_1 = class AdminService {
             email: data.email || "No Email",
             plan: data.subscriptionTier || "Free",
             status: "Active",
-            date: data.createdAt ? new Date(data.createdAt.toDate()).toISOString().split('T')[0] : "N/A"
+            date: data.createdAt
+                ? new Date(data.createdAt.toDate()).toISOString().split("T")[0]
+                : "N/A",
         };
     }
     async getPlans() {
         if (!this.firebaseApp)
             return [];
         try {
-            const snapshot = await this.firebaseApp.firestore().collection('plans').get();
+            const snapshot = await this.firebaseApp
+                .firestore()
+                .collection("plans")
+                .get();
             if (snapshot.empty)
                 return this.fallbackPlans;
-            return snapshot.docs.map(doc => (Object.assign({ id: doc.id }, doc.data())));
+            return snapshot.docs.map((doc) => (Object.assign({ id: doc.id }, doc.data())));
         }
         catch (error) {
             this.logger.error("Failed to fetch plans", error);
@@ -100,9 +124,13 @@ let AdminService = AdminService_1 = class AdminService {
         if (!this.firebaseApp)
             throw new Error("Firebase not initialized");
         try {
-            const id = plan.name.toLowerCase().replace(/\s+/g, '-');
+            const id = plan.name.toLowerCase().replace(/\s+/g, "-");
             const newPlan = Object.assign(Object.assign({}, plan), { id, active: true });
-            await this.firebaseApp.firestore().collection('plans').doc(id).set(newPlan);
+            await this.firebaseApp
+                .firestore()
+                .collection("plans")
+                .doc(id)
+                .set(newPlan);
             return newPlan;
         }
         catch (error) {
@@ -114,21 +142,39 @@ let AdminService = AdminService_1 = class AdminService {
         if (!this.firebaseApp)
             return { totalUsers: 0, activeSubs: 0 };
         try {
-            const usersSnapshot = await this.firebaseApp.firestore().collection('users').count().get();
+            const usersSnapshot = await this.firebaseApp
+                .firestore()
+                .collection("users")
+                .count()
+                .get();
             const totalUsers = usersSnapshot.data().count;
-            const activeSubsSnapshot = await this.firebaseApp.firestore().collection('users')
-                .where('subscriptionTier', 'in', ['quiz', 'pro'])
-                .count().get();
+            const activeSubsSnapshot = await this.firebaseApp
+                .firestore()
+                .collection("users")
+                .where("subscriptionTier", "in", ["quiz", "pro"])
+                .count()
+                .get();
             const activeSubs = activeSubsSnapshot.data().count;
-            const statsDoc = await this.firebaseApp.firestore().collection('system').doc('usage').get();
-            const featureUsage = statsDoc.exists ? statsDoc.data() : {
-                interviews: 0, resumes: 0, flashcards: 0, quizzes: 0, summaries: 0, codeTests: 0
-            };
+            const statsDoc = await this.firebaseApp
+                .firestore()
+                .collection("system")
+                .doc("usage")
+                .get();
+            const featureUsage = statsDoc.exists
+                ? statsDoc.data()
+                : {
+                    interviews: 0,
+                    resumes: 0,
+                    flashcards: 0,
+                    quizzes: 0,
+                    summaries: 0,
+                    codeTests: 0,
+                };
             return {
                 totalUsers,
                 activeSubs,
-                systemStatus: 'Healthy',
-                featureUsage
+                systemStatus: "Healthy",
+                featureUsage,
             };
         }
         catch (error) {
@@ -136,8 +182,15 @@ let AdminService = AdminService_1 = class AdminService {
             return {
                 totalUsers: 0,
                 activeSubs: 0,
-                systemStatus: 'Degraded',
-                featureUsage: { interviews: 0, resumes: 0, flashcards: 0, quizzes: 0, summaries: 0, codeTests: 0 }
+                systemStatus: "Degraded",
+                featureUsage: {
+                    interviews: 0,
+                    resumes: 0,
+                    flashcards: 0,
+                    quizzes: 0,
+                    summaries: 0,
+                    codeTests: 0,
+                },
             };
         }
     }
@@ -145,7 +198,7 @@ let AdminService = AdminService_1 = class AdminService {
 exports.AdminService = AdminService;
 exports.AdminService = AdminService = AdminService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('FIREBASE_APP')),
+    __param(0, (0, common_1.Inject)("FIREBASE_APP")),
     __metadata("design:paramtypes", [Object])
 ], AdminService);
 //# sourceMappingURL=admin.service.js.map

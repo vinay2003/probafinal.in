@@ -21,19 +21,19 @@ let SubscriptionGuard = class SubscriptionGuard {
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const userId = request.headers['x-user-id'];
+        const userId = request.headers["x-user-id"];
         if (!userId) {
-            throw new common_1.ForbiddenException('User ID not provided');
+            throw new common_1.ForbiddenException("User ID not provided");
         }
         if (!this.firebaseApp)
             return true;
         const db = this.firebaseApp.firestore();
-        const userDoc = await db.collection('users').doc(userId).get();
+        const userDoc = await db.collection("users").doc(userId).get();
         if (!userDoc.exists)
-            throw new common_1.ForbiddenException('User not found');
+            throw new common_1.ForbiddenException("User not found");
         const userData = userDoc.data();
-        if ((userData === null || userData === void 0 ? void 0 : userData.subscriptionTier) !== 'pro') {
-            throw new common_1.ForbiddenException('Pro subscription required');
+        if ((userData === null || userData === void 0 ? void 0 : userData.subscriptionTier) !== "pro") {
+            throw new common_1.ForbiddenException("Pro subscription required");
         }
         return true;
     }
@@ -41,7 +41,7 @@ let SubscriptionGuard = class SubscriptionGuard {
 exports.SubscriptionGuard = SubscriptionGuard;
 exports.SubscriptionGuard = SubscriptionGuard = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('FIREBASE_APP')),
+    __param(0, (0, common_1.Inject)("FIREBASE_APP")),
     __metadata("design:paramtypes", [Object])
 ], SubscriptionGuard);
 //# sourceMappingURL=subscription.guard.js.map

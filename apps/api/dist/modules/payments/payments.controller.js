@@ -28,21 +28,21 @@ let PaymentsController = class PaymentsController {
 };
 exports.PaymentsController = PaymentsController;
 __decorate([
-    (0, common_1.Post)('order'),
+    (0, common_1.Post)("order"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], PaymentsController.prototype, "createOrder", null);
 __decorate([
-    (0, common_1.Post)('verify'),
+    (0, common_1.Post)("verify"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], PaymentsController.prototype, "verifyPayment", null);
 exports.PaymentsController = PaymentsController = __decorate([
-    (0, common_1.Controller)('payments'),
+    (0, common_1.Controller)("payments"),
     __metadata("design:paramtypes", [payments_service_1.PaymentsService])
 ], PaymentsController);
 //# sourceMappingURL=payments.controller.js.map

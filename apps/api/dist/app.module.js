@@ -15,6 +15,7 @@ const career_module_1 = require("./modules/career/career.module");
 const exams_module_1 = require("./modules/exams/exams.module");
 const admin_module_1 = require("./modules/admin/admin.module");
 const config_1 = require("@nestjs/config");
+const app_controller_1 = require("./app.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,7 +30,7 @@ exports.AppModule = AppModule = __decorate([
             exams_module_1.ExamsModule,
             admin_module_1.AdminModule
         ],
-        controllers: [],
+        controllers: [app_controller_1.AppController],
         providers: [],
     })
 ], AppModule);

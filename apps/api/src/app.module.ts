@@ -8,6 +8,8 @@ import { AdminModule } from './modules/admin/admin.module';
 
 import { ConfigModule } from '@nestjs/config';
 
+import { AppController } from './app.controller';
+
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
@@ -18,7 +20,7 @@ import { ConfigModule } from '@nestjs/config';
         ExamsModule,
         AdminModule
     ],
-    controllers: [],
+    controllers: [AppController],
     providers: [],
 })
 export class AppModule { }

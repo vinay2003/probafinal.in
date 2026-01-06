@@ -1,12 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Redirect } from '@nestjs/common';
 
 @Controller()
 export class AppController {
     @Get()
-    getHello(): { message: string; version: string } {
-        return {
-            message: 'Welcome to Proba API',
-            version: '1.0.0',
-        };
+    @Redirect('https://probafinal.in', 302)
+    getHello() {
+        return { url: 'https://probafinal.in' };
     }
 }

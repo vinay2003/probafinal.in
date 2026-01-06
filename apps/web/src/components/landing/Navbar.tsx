@@ -58,10 +58,10 @@ export function Navbar() {
                 <div className="hidden md:flex items-center gap-4">
                     <ModeToggle />
                     <Button variant="ghost" asChild>
-                        <Link href="/auth/login">Log In</Link>
+                        <Link href="/login">Log In</Link>
                     </Button>
                     <Button asChild>
-                        <Link href="/auth/register">Get Started</Link>
+                        <Link href="/signup">Get Started</Link>
                     </Button>
                 </div>
 
@@ -92,10 +92,10 @@ export function Navbar() {
                     ))}
                     <div className="flex flex-col gap-2 mt-2">
                         <Button variant="outline" asChild className="w-full">
-                            <Link href="/auth/login">Log In</Link>
+                            <Link href="/login">Log In</Link>
                         </Button>
                         <Button asChild className="w-full">
-                            <Link href="/auth/register">Get Started</Link>
+                            <Link href="/signup">Get Started</Link>
                         </Button>
                     </div>
                 </div>

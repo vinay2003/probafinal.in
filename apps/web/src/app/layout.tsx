@@ -9,6 +9,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeWrapper } from '@/components/theme-wrapper';
 
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://probafinal.in'),
   title: {
@@ -100,6 +102,7 @@ export default function RootLayout({
               {children}
 
               <Toaster />
+              <SpeedInsights />
             </ThemeWrapper>
           </FirebaseClientProvider>
         </ThemeProvider>

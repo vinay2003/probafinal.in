@@ -4,6 +4,8 @@ import { Check, Edit2 } from 'lucide-react';
 import Link from 'next/link';
 import { getAdminPlans } from '@/app/actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminPricingPage() {
     const plans = await getAdminPlans();
 

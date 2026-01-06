@@ -6,6 +6,8 @@ import { logoutAdmin, getAdminStats } from '@/app/actions';
 import { Users, FileText, Settings, LogOut } from 'lucide-react';
 import { AdminCharts } from '@/components/admin/admin-charts';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboardPage() {
     const cookieStore = await cookies();
     const session = cookieStore.get('admin_session');

@@ -1,10 +1,10 @@
-import { Controller, Get, Redirect } from '@nestjs/common';
+import { Controller, Get } from "@nestjs/common";
 
 @Controller()
 export class AppController {
-    @Get()
-    getHello() {
-        return `
+  @Get()
+  getHello() {
+    return `
       <!DOCTYPE html>
       <html>
         <head>
@@ -25,5 +25,5 @@ export class AppController {
         </body>
       </html>
     `;
-    }
+  }
 }

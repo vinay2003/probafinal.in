@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { CareerController } from './career.controller';
-import { CareerService } from './career.service';
-import { AiModule } from '../ai/ai.module';
+import { Module } from "@nestjs/common";
+import { CareerController } from "./career.controller";
+import { CareerService } from "./career.service";
+import { AiModule } from "../ai/ai.module";
 
 @Module({
-    imports: [AiModule],
-    controllers: [CareerController],
-    providers: [CareerService],
+  imports: [AiModule],
+  controllers: [CareerController],
+  providers: [CareerService],
 })
-export class CareerModule { }
+export class CareerModule {}

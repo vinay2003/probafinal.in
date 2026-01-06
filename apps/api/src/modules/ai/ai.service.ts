@@ -1,5 +1,10 @@
-import { Injectable, InternalServerErrorException, HttpException, HttpStatus } from '@nestjs/common';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import {
+  Injectable,
+  InternalServerErrorException,
+  HttpException,
+  HttpStatus,
+} from "@nestjs/common";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 @Injectable()
 export class AiService {
@@ -8,11 +13,14 @@ export class AiService {
   private jsonModel: any;
 
   constructor() {
-    const apiKey = process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY;
+    const apiKey =
+      process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.error('CRITICAL: GOOGLE_GENAI_API_KEY is missing in API environment.');
+      console.error(
+        "CRITICAL: GOOGLE_GENAI_API_KEY is missing in API environment.",
+      );
     }
-    this.genAI = new GoogleGenerativeAI(apiKey || '');
+    this.genAI = new GoogleGenerativeAI(apiKey || "");
 
     // Standard model for Chat (text/mixed)
     this.model = this.genAI.getGenerativeModel({
@@ -23,21 +31,21 @@ export class AiService {
     this.jsonModel = this.genAI.getGenerativeModel({
       model: "gemini-flash-latest",
       generationConfig: {
-        responseMimeType: "application/json"
-      }
+        responseMimeType: "application/json",
+      },
     });
   }
 
   async chat(message: string, history: { role: string; parts: string }[]) {
     try {
-      // Gemini requires history to start with 'user'. 
+      // Gemini requires history to start with 'user'.
       // If the first message is from AI (e.g. greeting), strict models might fail.
-      let processedHistory = history.map(h => ({
-        role: h.role === 'ai' ? 'model' : 'user',
-        parts: [{ text: h.parts }]
+      let processedHistory = history.map((h) => ({
+        role: h.role === "ai" ? "model" : "user",
+        parts: [{ text: h.parts }],
       }));
 
-      if (processedHistory.length > 0 && processedHistory[0].role === 'model') {
+      if (processedHistory.length > 0 && processedHistory[0].role === "model") {
         processedHistory = processedHistory.slice(1);
       }
 
@@ -48,37 +56,53 @@ export class AiService {
         },
       });
 
-      const result = await this._retryWithBackoff(async () => await chat.sendMessage(message));
+      const result = await this._retryWithBackoff(
+        async () => await chat.sendMessage(message),
+      );
       const response = await (result as any).response;
       return { text: response.text() };
     } catch (error) {
       console.error("Chat Error:", error);
       if ((error as any).status === 429) {
-        throw new HttpException('AI Busy (Rate Limit). Please wait a moment.', HttpStatus.TOO_MANY_REQUESTS);
+        throw new HttpException(
+          "AI Busy (Rate Limit). Please wait a moment.",
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
       }
-      throw new InternalServerErrorException('Chat Failed: ' + ((error as any).message || "Unknown error"));
+      throw new InternalServerErrorException(
+        "Chat Failed: " + ((error as any).message || "Unknown error"),
+      );
     }
   }
 
-  private async _retryWithBackoff<T>(fn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> {
+  private async _retryWithBackoff<T>(
+    fn: () => Promise<T>,
+    retries = 3,
+    delay = 1000,
+  ): Promise<T> {
     try {
       return await fn();
     } catch (error) {
       if (retries > 0 && error.status === 429) {
         console.warn(`Rate limited. Retrying in ${delay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
         return this._retryWithBackoff(fn, retries - 1, delay * 2);
       }
       throw error;
     }
   }
 
-  async generateQuizQuestions(subject: string, topic: string, numberOfQuestions: number, context?: string) {
+  async generateQuizQuestions(
+    subject: string,
+    topic: string,
+    numberOfQuestions: number,
+    context?: string,
+  ) {
     const prompt = `
       You are an expert educational content creator. Generate ${numberOfQuestions} high-quality, challenging multiple-choice questions for:
       Subject: ${subject}
       Topic: ${topic}
-      ${context ? `Context: ${context}` : ''}
+      ${context ? `Context: ${context}` : ""}
       
       Difficulty: Adaptive (Mix of easy, medium, hard).
       Each question must include 4 distinct options, the correct answer text, and a helpful hint.
@@ -98,10 +122,14 @@ export class AiService {
     return this._generateJson(prompt);
   }
 
-  async generateFlashcards(topic: string, numberOfCards: number, context?: string) {
+  async generateFlashcards(
+    topic: string,
+    numberOfCards: number,
+    context?: string,
+  ) {
     const prompt = `
       You are an expert educator. Create ${numberOfCards} concise, high-quality flashcards on the topic: '${topic}'. 
-      ${context ? `Context: ${context}` : ''}
+      ${context ? `Context: ${context}` : ""}
       
       Return ONLY a JSON object with a "flashcards" array containing objects with 'front' (term/question) and 'back' (definition/answer) fields.
       
@@ -177,7 +205,14 @@ export class AiService {
     return this._generateJson(prompt);
   }
 
-  async analyzeWriting(text: string, taskType: 'ielts_task1' | 'ielts_task2' | 'toefl_integrated' | 'toefl_independent') {
+  async analyzeWriting(
+    text: string,
+    taskType:
+      | "ielts_task1"
+      | "ielts_task2"
+      | "toefl_integrated"
+      | "toefl_independent",
+  ) {
     const prompt = `
         Act as a certified IELTS/TOEFL Writing Examiner. Grade this essay.
         Task Type: ${taskType}
@@ -197,9 +232,6 @@ export class AiService {
       `;
     return this._generateJson(prompt);
   }
-
-
-
 
   async analyzeInterviewAnswer(question: string, transcript: string) {
     const prompt = `
@@ -222,7 +254,11 @@ export class AiService {
     return this._generateJson(prompt);
   }
 
-  async generateInterviewQuestions(role: string, experience: string, description: string) {
+  async generateInterviewQuestions(
+    role: string,
+    experience: string,
+    description: string,
+  ) {
     const prompt = `
         You are a Senior Technical Recruiter at a top tech company. 
         Context: The candidate is applying for a ${role} position.
@@ -290,16 +326,21 @@ export class AiService {
   private async _generateJson(prompt: string) {
     try {
       // Use the strict JSON model
-      const result = await this._retryWithBackoff(async () => await this.jsonModel.generateContent(prompt));
+      const result = await this._retryWithBackoff(
+        async () => await this.jsonModel.generateContent(prompt),
+      );
       const response = await (result as any).response;
       const text = response.text();
 
       // Clean up markdown code blocks if present to ensure pure JSON
-      const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const jsonStr = text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
 
       // Locate pure JSON object
-      const firstBrace = jsonStr.indexOf('{');
-      const lastBrace = jsonStr.lastIndexOf('}');
+      const firstBrace = jsonStr.indexOf("{");
+      const lastBrace = jsonStr.lastIndexOf("}");
 
       if (firstBrace !== -1 && lastBrace !== -1) {
         const cleanJson = jsonStr.substring(firstBrace, lastBrace + 1);
@@ -310,9 +351,14 @@ export class AiService {
     } catch (error) {
       console.error("AI Generation Failed:", error);
       if ((error as any).status === 429) {
-        throw new HttpException('AI Busy (Rate Limit). Please wait a moment.', HttpStatus.TOO_MANY_REQUESTS);
+        throw new HttpException(
+          "AI Busy (Rate Limit). Please wait a moment.",
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
       }
-      throw new InternalServerErrorException('AI Service Failure: ' + (error.message || "Unknown error"));
+      throw new InternalServerErrorException(
+        "AI Service Failure: " + (error.message || "Unknown error"),
+      );
     }
   }
 }

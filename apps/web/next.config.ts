@@ -1,30 +1,37 @@
 import type { NextConfig } from 'next';
 
-const withPWA = require('next-pwa')({
+const withPWA = require('@ducanh2912/next-pwa').default({
   dest: 'public',
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
-  runtimeCaching: [
-    {
-      urlPattern: /^https?.*/,
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'offlineCache',
-        expiration: {
-          maxEntries: 200,
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
+  workboxOptions: {
+    disableDevLogs: true,
+    runtimeCaching: [
+      {
+        urlPattern: /^https?.*/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'offlineCache',
+          expiration: {
+            maxEntries: 200,
+          },
         },
       },
-    },
-    {
-      urlPattern: /\/summary/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'summary-cache',
-        expiration: { maxEntries: 50 }
+      {
+        urlPattern: /\/summary/,
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheName: 'summary-cache',
+          expiration: { maxEntries: 50 }
+        }
       }
-    }
-  ]
+    ]
+  }
 });
 
 const nextConfig: NextConfig = {

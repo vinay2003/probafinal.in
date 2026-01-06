@@ -50,7 +50,7 @@ export function Hero() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
-                    <Link href="/auth/signup">
+                    <Link href="/signup">
                         <Button size="lg" className="h-12 px-8 text-base rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all">
                             Get Started for Free
                             <ArrowRight className="w-4 h-4 ml-2" />

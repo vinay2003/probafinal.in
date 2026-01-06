@@ -19,7 +19,7 @@ export function Pricing() {
                         <h3 className="text-xl font-bold mb-2">Free Starter</h3>
                         <p className="text-muted-foreground mb-6 text-sm">Essential tools for casual learners.</p>
                         <div className="text-4xl font-bold mb-6">$0<span className="text-base font-normal text-muted-foreground">/mo</span></div>
-                        <Link href="/auth/signup">
+                        <Link href="/signup">
                             <Button variant="outline" className="w-full mb-8">Get Started</Button>
                         </Link>
                         <ul className="space-y-3">

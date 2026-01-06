@@ -17,10 +17,6 @@
         {
             "src": "/api/(.*)",
             "dest": "apps/api/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "apps/web/$1"
         }
     ]
 }

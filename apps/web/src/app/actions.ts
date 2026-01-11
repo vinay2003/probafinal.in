@@ -1,9 +1,15 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import * as aiService from '@/services/ai/ai.service';
+import * as adminService from '@/services/admin/admin.service';
+import * as careerService from '@/services/career/career.service';
+import * as paymentsService from '@/services/payments/payments.service';
+
+// --- Authentication (Admin) ---
 
 export async function loginAdmin(username: string, pass: string) {
-  // Credentials from Environment Variables
   const adminUser = process.env.ADMIN_USERNAME || 'admin';
   const adminPass = process.env.ADMIN_PASSWORD || 'admin';
 
@@ -21,16 +27,13 @@ export async function loginAdmin(username: string, pass: string) {
   return { success: false, error: 'Invalid credentials' };
 }
 
-import { redirect } from 'next/navigation';
-
 export async function logoutAdmin() {
   const cookieStore = await cookies();
   cookieStore.delete('admin_session');
   redirect('/admin');
 }
 
-// Define return types manually or import from shared lib if available
-// For now, mirroring what the frontend expects
+// --- AI Service Actions ---
 
 type GenerateQuizQuestionsInput = {
   subject: string;
@@ -59,62 +62,19 @@ type SummarizeDocumentInput = {
   document: string;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001';
-
-async function fetchApi(endpoint: string, method: string, body?: any) {
-  try {
-    const res = await fetch(`${API_URL}/${endpoint}`, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: body ? JSON.stringify(body) : undefined,
-      cache: 'no-store'
-    });
-
-    if (!res.ok) {
-      let errorMessage = res.statusText;
-      try {
-        const errorData = await res.json();
-        errorMessage = errorData.message || errorMessage;
-      } catch (jsonError) {
-        // Fallback if response is not JSON
-      }
-      throw new Error(errorMessage);
-    }
-    return await res.json();
-  } catch (e: any) {
-    console.error(`Error calling ${endpoint}:`, e);
-    throw new Error(e.message || "Unknown API Error");
-  }
-}
-
 export async function generateQuizAction(input: GenerateQuizQuestionsInput) {
-  return await fetchApi('ai/quiz', 'POST', input);
+  return await aiService.generateQuizQuestions(input.subject, input.topic, input.numberOfQuestions, input.context);
 }
 
 export async function generateFlashcardsAction(input: GenerateFlashcardsInput) {
-  // The NestJS API expects { topic, numberOfCards }
-  // input match
-  const result = await fetchApi('ai/flashcards', 'POST', input);
-  // NestJS returns { flashcards: [...] }, frontend expects { flashcards: [...] } ?
-  // Let's ensure consistency.
-  return result;
+  return await aiService.generateFlashcards(input.topic, input.numberOfCards, input.context);
 }
 
 export async function getFeedbackAction(input: any) {
-  // Not implemented in NestJS yet? Or maybe I missed it.
-  // Stub for now
   return { feedback: "AI feedback is currently being migrated to the new engine." };
 }
 
 export async function getExplanationAction(input: PersonalizedExplanationInput) {
-  // Not explicitly in NestJS yet, but generic completion or adding an endpoint
-  // I missed adding 'explanation' endpoint to AiController.
-  // I'll add a TODO or basic stub.
-  // Actually I should add it to NestJS if I want it to work.
-
-  // Quick fix: Return stub or implement immediately in next tool call.
   return { explanation: "This feature is being migrated.", example: "Please try again later." };
 }
 
@@ -123,65 +83,77 @@ export async function getStrategyAction(input: StudyStrategySuggestionsInput) {
 }
 
 export async function getSummaryAction(input: SummarizeDocumentInput) {
-  const result = await fetchApi('ai/summarize', 'POST', { content: input.document });
-  return result;
+  return await aiService.summarizeContent(input.document);
 }
 
 export async function chatAction(message: string, history: any[]) {
-  return await fetchApi('ai/chat', 'POST', { message, history });
+  return await aiService.chat(message, history);
 }
 
+// --- Career Service Actions ---
+
 export async function generateInterviewQuestionsAction(role: string, experience: string, description: string) {
-  return await fetchApi('ai/interview', 'POST', { role, experience, description });
+  return await aiService.generateInterviewQuestions(role, experience, description);
 }
 
 export async function analyzeInterviewAnswerAction(question: string, transcript: string) {
-  return await fetchApi('ai/interview/analyze', 'POST', { question, transcript });
+  return await aiService.analyzeInterviewAnswer(question, transcript);
 }
 
-export async function analyzeWritingAction(text: string, taskType: string) {
-  return await fetchApi('ai/writing', 'POST', { text, taskType });
+export async function analyzeWritingAction(text: string, taskType: any) {
+  // Ensuring taskType is one of the valid strings or default to ielts_task2 if unsure, 
+  // but ignoring strict check for now as the service handles string matching
+  return await aiService.analyzeWriting(text, taskType);
 }
 
 export async function analyzeSpeakingAction(transcript: string) {
-  return await fetchApi('ai/speaking', 'POST', { transcript });
+  return await aiService.analyzeSpeaking(transcript);
 }
 
 export async function generateCodingAction(difficulty: string, language: string) {
-  return await fetchApi('ai/coding/generate', 'POST', { difficulty, language });
+  return await aiService.generateCodingChallenge(difficulty, language);
 }
 
 export async function evaluateCodingAction(code: string, language: string, problem: string) {
-  return await fetchApi('ai/coding/evaluate', 'POST', { code, language, problem });
+  return await aiService.evaluateCode(code, language, problem);
 }
 
 export async function generateSqlAction(difficulty: string) {
-  return await fetchApi('ai/sql/generate', 'POST', { difficulty });
+  return await aiService.generateSqlChallenge(difficulty);
 }
 
 export async function optimizeResumeAction(resume: string, jobDescription: string) {
-  return await fetchApi('ai/resume', 'POST', { resume, jobDescription });
+  return await careerService.optimizeResume(resume, jobDescription);
 }
 
+// --- Payments Actions ---
+
 export async function upgradeSubscriptionAction(userId: string, tier: 'quiz' | 'pro'): Promise<{ success: boolean; error?: string }> {
-  // Call Payments logic or just stub.
-  // Ideally this generates an order or verifies something.
+  // In a real flow, this would create an order and return the order ID
+  // For now, we stub it or use the payments service if we had the full flow
+  // return await paymentsService.createOrder(tier === 'pro' ? 119 : 49);
   return { success: true };
 }
 
-// Admin API Wrappers
+// --- Admin Actions ---
+
 export async function getAdminUsers() {
-  return await fetchApi('admin/users', 'GET');
+  const users = await adminService.getUsers();
+  // Return plain objects to avoid serialization issues with Firestore dates if any remain
+  return JSON.parse(JSON.stringify(users));
 }
 
 export async function getAdminPlans() {
-  return await fetchApi('admin/plans', 'GET');
+  const plans = await adminService.getPlans();
+  return JSON.parse(JSON.stringify(plans));
 }
 
 export async function createAdminPlan(plan: any) {
-  return await fetchApi('admin/plans', 'POST', plan);
+  const newPlan = await adminService.createPlan(plan);
+  return JSON.parse(JSON.stringify(newPlan));
 }
 
 export async function getAdminStats() {
-  return await fetchApi('admin/stats', 'GET');
+  const stats = await adminService.getStats();
+  return JSON.parse(JSON.stringify(stats));
 }

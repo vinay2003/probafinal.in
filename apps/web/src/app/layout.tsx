@@ -80,7 +80,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("font-body antialiased", atkinson.variable)}>
+      <body className={cn("font-body antialiased", atkinson.variable)} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
+
 
 export function Hero() {
     return (
@@ -64,42 +65,8 @@ export function Hero() {
                 </motion.div>
 
                 {/* Floating UI Elements / Showoff (Placeholder for now, can be an image) */}
-                {/* Floating UI Elements / Showoff */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5, type: "spring" }}
-                    className="mt-20 relative mx-auto max-w-5xl"
-                >
-                    {/* Abstract Glow Behind */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-2xl blur-2xl opacity-50" />
 
-                    <div className="relative rounded-xl border border-white/10 bg-black/50 backdrop-blur-md shadow-2xl overflow-hidden">
-                        {/* Browser Window Header */}
-                        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/5">
-                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                            <div className="ml-4 px-3 py-1 rounded-md bg-white/5 text-[10px] text-muted-foreground font-mono">
-                                app.proba.ai/dashboard
-                            </div>
-                        </div>
 
-                        {/* Image Container */}
-                        <div className="relative aspect-[16/9] w-full bg-background/50">
-                            <Image
-                                src="/dashboard-preview.png"
-                                alt="Proba Dashboard Preview"
-                                fill
-                                className="object-cover"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                                priority
-                            />
-                            {/* Inner Shadow Overlay for Depth */}
-                            <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
-                        </div>
-                    </div>
-                </motion.div>
             </div>
         </section>
     );

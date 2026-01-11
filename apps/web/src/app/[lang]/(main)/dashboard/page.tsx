@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Mic, FileText, Globe, Sparkles, TrendingUp, CalendarCheck, FileQuestion, Layers, BotMessageSquare, Lock, Code, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -102,46 +103,36 @@ export default function DashboardPage() {
     <div className="space-y-8 pb-10">
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-primary/5 border border-primary/10 p-8 md:p-12 text-center md:text-left">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
+      {/* Hero Section */}
+      <section className="relative overflow-hidden rounded-3xl bg-zinc-950 border border-border/10 p-8 md:p-12 text-center md:text-left">
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-transparent opacity-50 pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-          <header className="space-y-4 max-w-2xl">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-extrabold tracking-tight"
-            >
-              Welcome back, <span className="text-gradient">{user?.displayName?.split(' ')[0] || 'Scholar'}</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-xl text-muted-foreground"
-            >
+          <header className="space-y-6 max-w-2xl">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
+              Welcome back, <span className="text-violet-400">Scholar</span>
+            </h1>
+            <p className="text-xl text-zinc-400 mb-8">
               Your AI Career Hub is ready. What goal are we crushing today?
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="flex flex-wrap gap-4 justify-center md:justify-start"
-            >
-              <Button size="lg" className="rounded-full shadow-lg hover:shadow-primary/25 transition-all" asChild>
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+              <Button size="lg" className="rounded-full bg-violet-600 hover:bg-violet-700 text-white px-8 py-6 shadow-lg shadow-violet-500/20 transition-all font-semibold" asChild>
                 <Link href="/interview">
-                  <Mic className="mr-2 h-4 w-4" /> Start Interview
+                  <Mic className="mr-2 h-5 w-5" /> Start Interview
                 </Link>
               </Button>
-              {!isPro && (
-                <Button variant="outline" size="lg" className="rounded-full border-primary/50 text-primary hover:bg-primary/5" asChild>
-                  <Link href="/subscription">Unlock Pro</Link>
-                </Button>
-              )}
-            </motion.div>
+            </div>
           </header>
 
-          <div className="relative bg-card p-6 rounded-2xl shadow-2xl border border-border/50 rotate-3 hover:rotate-0 transition-all duration-300 hidden md:block">
-            <Sparkles className="w-24 h-24 text-primary" />
+          <div className="relative block w-full max-w-[300px] md:max-w-[500px] shrink-0 mt-8 md:mt-0 mx-auto md:mx-0">
+            <Image
+              src="/dashboard-hero-v2.png"
+              alt="Dashboard Hero"
+              width={600}
+              height={600}
+              className="object-contain drop-shadow-2xl"
+              priority
+              sizes="(max-width: 768px) 100vw, 500px"
+            />
           </div>
         </div>
       </section >

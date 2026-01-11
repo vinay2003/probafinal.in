@@ -4,19 +4,11 @@
         {
             "src": "apps/web/package.json",
             "use": "@vercel/next"
-        },
-        {
-            "src": "apps/api/package.json",
-            "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "handle": "filesystem"
-        },
-        {
-            "src": "/api/(.*)",
-            "dest": "/apps/api/$1"
         },
         {
             "src": "/(.*)",

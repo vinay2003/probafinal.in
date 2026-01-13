@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "predev": "lsof -ti :3001,9002 | xargs kill -9 || true",
-    "dev": "npm run dev --workspace=apps/web",
+    "dev": "next dev",
     "install:all": "npm install"
   },
   "devDependencies": {
